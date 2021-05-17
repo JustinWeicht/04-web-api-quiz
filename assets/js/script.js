@@ -1,5 +1,6 @@
 // variables
 var counter = 75;
+var i = -1; // -1 accounts for looping once when function is called
 
 // questions array
 var questions = [
@@ -30,7 +31,7 @@ var questions = [
     }
 ];
 
-// countdown begins after start button is clicked
+// countdown and questions begin after start button is clicked
 document.getElementById("start-btn").addEventListener("click", function() {
     counter = 75;
     document.getElementById("counter").innerHTML = counter;
@@ -38,8 +39,74 @@ document.getElementById("start-btn").addEventListener("click", function() {
     countDown = setInterval(function() {
         counter--;
         document.getElementById("counter").innerHTML = counter;
+
+        // stop counter and bring user to all done /submit section when countDown expires
         if (counter <= 0) {
             clearInterval(countDown);
+            allDone();
         }
     }, 1000);
+    // starts questions loop
+    quizQuestions();
 });
+
+// all done! / submit score section
+var allDone = function() {
+    clearInterval(countDown);
+    var pageContent = `
+        <h1 id="title">All Done!</h1>
+        <p>Your final score is ` + counter + `.</p>
+        <form>
+            <label for="name">Enter Initials: </label><input type="text" id="name" name="name"><input type="button" value="Submit">
+        </form>`;
+
+    // changes content on the page with innerHTML
+    document.getElementById("content").innerHTML = pageContent;
+};
+
+var right = function() {
+    var rightWrong = "Right";
+    quizQuestions();
+
+    // changes content on the page with innerHTML
+    document.getElementById("right-wrong").innerHTML = rightWrong;
+}
+
+var wrong = function() {
+    var rightWrong = "Wrong";
+    counter -= 10;
+    quizQuestions();
+
+    // changes content on the page with innerHTML
+    document.getElementById("right-wrong").innerHTML = rightWrong;
+}
+
+// loop for questions
+var quizQuestions = function() {
+    i++;
+
+    if (i > questions.length) {
+        allDone();
+        return;
+    }
+
+        // for loop for question
+        var pageContent = "<h1 id='title'>" + questions[i].question + "</h1>";
+
+        // for loop for choices within the question to creat buttons
+        for (var j = 0; j < questions[i].choices.length; j++) {
+            var userChoices = "<p><button onclick=\"[ANSWER]\">[CHOICE]</button></p>";
+            userChoices = userChoices.replace("[CHOICE]", questions[i].choices[j]);
+
+            // check if choice is right / wrong
+            if (questions[i].choices[j] == questions[i].answer) {
+                userChoices = userChoices.replace("[ANSWER]", "right()");
+            } else {
+                userChoices = userChoices.replace("[ANSWER]", "wrong()");
+            }
+            pageContent += userChoices;
+        }    
+
+    // changes content on the page with innerHTML
+    document.getElementById("content").innerHTML = pageContent;
+}
