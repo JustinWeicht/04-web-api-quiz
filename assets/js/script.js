@@ -50,23 +50,42 @@ document.getElementById("start-btn").addEventListener("click", function() {
     quizQuestions();
 });
 
-// all done! / submit score section
-var allDone = function() {
-    clearInterval(countDown);
+var highScores = function() {
     var pageContent = `
-        <h1 id="title">All Done!</h1>
-        <p>Your final score is ` + counter + `.</p>
-        <form>
-            <label for="name">Enter Initials: </label><input type="text" id="name" name="name"><input type="button" value="Submit">
-        </form>`;
+        <h1 id="title">High Scores</h1>
+        <p>` name + score `</p>
+        <p id="buttons"><input type="button" value="Go Back"><p id="buttons"><input type="button" value="Clear High scores"></p>`;
 
     // changes content on the page with innerHTML
     document.getElementById("content").innerHTML = pageContent;
+}
+// all done! / submit score section
+var allDone = function() {
+    // converts the lime left into score
+    var score = counter;
+    clearInterval(countDown);
+
+    var pageContent = `
+        <h1 id="title">All Done!</h1>
+        <p>Your final score is ` + score + `.</p>
+        <form>
+            <label for="name">Enter Initials: </label><input type="text" id="name" name="name"><input type="button" value="Submit">
+        </form>`;
+        return name;
+
+        document.getElementById("name").addEventListener("click", highScores());
+
+    // changes content on the page with innerHTML
+    document.getElementById("content").innerHTML = pageContent;
+
+    // changes content of right-wrong with innerHTML
+    document.getElementById("right-wrong").innerHTML = rightWrong;
 };
 
 var right = function() {
     var rightWrong = "Right";
     quizQuestions();
+    
 
     // changes content on the page with innerHTML
     document.getElementById("right-wrong").innerHTML = rightWrong;
@@ -77,6 +96,8 @@ var wrong = function() {
     counter -= 10;
     quizQuestions();
 
+    
+
     // changes content on the page with innerHTML
     document.getElementById("right-wrong").innerHTML = rightWrong;
 }
@@ -85,13 +106,13 @@ var wrong = function() {
 var quizQuestions = function() {
     i++;
 
-    if (i > questions.length) {
+    if (i > questions.length - 1) {
         allDone();
         return;
     }
 
         // for loop for question
-        var pageContent = "<h1 id='title'>" + questions[i].question + "</h1>";
+        var pageContent = "<h1 id='title'>" + questions[i].question + "</h1>"
 
         // for loop for choices within the question to creat buttons
         for (var j = 0; j < questions[i].choices.length; j++) {
