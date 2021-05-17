@@ -50,15 +50,6 @@ document.getElementById("start-btn").addEventListener("click", function() {
     quizQuestions();
 });
 
-var highScores = function() {
-    var pageContent = `
-        <h1 id="title">High Scores</h1>
-        <p>` name + score `</p>
-        <p id="buttons"><input type="button" value="Go Back"><p id="buttons"><input type="button" value="Clear High scores"></p>`;
-
-    // changes content on the page with innerHTML
-    document.getElementById("content").innerHTML = pageContent;
-}
 // all done! / submit score section
 var allDone = function() {
     // converts the lime left into score
@@ -71,7 +62,6 @@ var allDone = function() {
         <form>
             <label for="name">Enter Initials: </label><input type="text" id="name" name="name"><input type="button" value="Submit">
         </form>`;
-        return name;
 
         document.getElementById("name").addEventListener("click", highScores());
 
