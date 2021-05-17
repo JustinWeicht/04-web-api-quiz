@@ -63,8 +63,8 @@ var allDone = function() {
             <label for="name">Enter Initials: </label><input type="text" id="name" name="name"><input type="button" value="Submit">
         </form>`;
 
-        document.getElementById("name").addEventListener("click", highScores());
-
+    var rightWrong = "";
+    
     // changes content on the page with innerHTML
     document.getElementById("content").innerHTML = pageContent;
 
